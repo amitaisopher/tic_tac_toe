@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Showing all users</title>
+</head>
+<body>
+<h3>This is a list of all users</h3>
+<h5>
+    {% if all_users_list %}
+        <ul>
+            {% for user in all_users_list %}
+                <li>{{ user.name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h5>No users exist on the system</h5>
+    {% endif %}
+</h5>
+</body>
+</html>

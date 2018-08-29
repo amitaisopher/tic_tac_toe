@@ -1,0 +1,80 @@
+{% extends 'ttt_app\base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Welcome {{ user_info.name }} !</h2>
+    <h2>This is your Tic Tac Toe App personal statistics page</h2>
+    <div>
+        <button type="button" class="btn btn-primary" style="margin-right: 15px">Start a new game</button>
+        <button type="button" class="btn btn-primary" style="margin-right: 15px">Continue an ongoing game</button>
+        <button type="button" class="btn btn-primary" style="margin-right: 15px" onclick="redirect_to_stat_page()">View
+            your statistics
+        </button>
+
+    </div>
+    <div>
+        <h3>Your current statistics are below</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Parameter</th>
+                <th scope="col">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Moves played</td>
+                <td id="moves_palyed">{{ user_info.user_moves_counter }}</td>
+            </tr>
+            <tr>
+                <td>Number of games</td>
+                <td id="number_of_games">{{ number_of_games }}</td>
+            </tr>
+            <tr>
+                <td>Number of ongoing games</td>
+                <td id="ongoing_games">{{ ongoing_games }}</td>
+            </tr>
+            <tr>
+                <td>Number of winnings</td>
+                <td id="number_of_winnings">{{ number_of_winnings }}</td>
+            </tr>
+            <tr>
+                <td>Number of losses</td>
+                <td id="number_of_losses">{{ number_of_losses }}</td>
+            </tr>
+            <tr>
+                <td>Number of draws</td>
+                <td id="number_of_draws">{{ number_of_draws }}</td>
+            </tr>
+            <tr>
+                <td>Number of times played as X</td>
+                <td id="times_played_as_x">{{ times_played_as_x }}</td>
+            </tr>
+            <tr>
+                <td>Number of times played as Circle</td>
+                <td id="times_played_as_circle">{{ times_played_as_circle }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    var roomName = "{{ user_info.email }}";
+
+    var userStatisticsSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/ttt/userStatistics/');
+
+    userStatisticsSocket.onmessage = function (e) {
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+        document.querySelector('#chat-log').value += (message + '\n');
+    };
+
+    userStatisticsSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+</script>
+{% endblock %}

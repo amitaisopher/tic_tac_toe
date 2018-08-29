@@ -1,0 +1,24 @@
+{% extends 'ttt_app\base.html' %}
+
+{% block content %}
+<script>
+    function redirect_to_stat_page(){
+        window.location.replace('http://' + window.location.host + '/ttt/userStatistics')
+    }
+
+    function redirect_to_start_game_page(){
+        window.location.replace('http://' + window.location.host + '/ttt/startGame')
+    }
+</script>
+    <div class="container">
+        <h2>Welcome {{ name }} !</h2>
+        <h2>This is your Tic Tac Toe App homepage</h2>
+        <div>
+            <button type="button" class="btn btn-primary" style="margin-right: 15px" onclick="redirect_to_start_game_page()">Start a new game</button>
+            <button type="button" class="btn btn-primary" style="margin-right: 15px">Continue an ongoing game</button>
+            <button type="button" class="btn btn-primary" style="margin-right: 15px" onclick="redirect_to_stat_page()">View your statistics</button>
+
+        </div>
+    </div>
+
+{% endblock %}
